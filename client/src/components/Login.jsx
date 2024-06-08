@@ -1,6 +1,7 @@
 import React from "react";
 import "../styles/Login.css";
 import { motion, AnimatePresence } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
 const images = [
   "/classroomVT.jpg",
@@ -14,6 +15,7 @@ function Login() {
   const [index, setIndex] = React.useState(0);
   const [username, setUsername] = React.useState("");
   const [password, setPassword] = React.useState("");
+  const navigate = useNavigate();
 
   React.useEffect(() => {
     const interval = setInterval(() => {
@@ -26,15 +28,13 @@ function Login() {
 
   function handleSubmit(event) {
     event.preventDefault();
-    const loginData = {
-      username,
-      password,
-    };
 
     if (!username || !password) {
       window.alert("Please fill in both fields.");
       return;
     }
+
+    navigate("/ClassList");
   }
 
   return (
@@ -63,7 +63,7 @@ function Login() {
           </div>
         </div>
         <div className="login-rightside">
-          <h2>Welcome</h2>
+          <h2>EduGrade.</h2>
           <form onSubmit={handleSubmit}>
             <label htmlFor="username">Username</label>
             <input
