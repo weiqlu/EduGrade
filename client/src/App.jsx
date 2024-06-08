@@ -10,10 +10,13 @@ import "./App.css";
 
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<Login />} />
-      <Route path="/NavBar" element={<NavBar />} />
-    </Routes>
+    <div>
+      <Routes>
+        <Route exact path="/" element={<Login />} />
+        <Route exact path="/Login" element={<Login />} />
+        <Route exact path="*" element={<NotFound />} />
+      </Routes>
+    </div>
   );
 }
 

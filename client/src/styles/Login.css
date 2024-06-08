@@ -1,0 +1,103 @@
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #87c4bc;
+}
+
+.login-background {
+  display: flex;
+  width: 85%;
+  height: 52vh;
+  max-width: 1400px;
+  background-color: white;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
+  border-radius: 25px;
+  overflow: hidden;
+}
+
+.login-leftside {
+  flex: 1.7;
+  position: relative;
+  color: white;
+  overflow: hidden;
+  margin: 20px;
+  border-radius: 20px;
+}
+
+.slideshow-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.slideshow-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 20px;
+}
+
+.login-rightside {
+  flex: 0.9;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-right: 19px;
+}
+
+.login-rightside h2 {
+  margin-bottom: 20px;
+  font-size: 2rem;
+}
+
+form {
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+}
+
+form label {
+  margin-bottom: 5px;
+  font-size: 1rem;
+}
+
+form input {
+  margin-bottom: 15px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+.forgot-password {
+  margin-bottom: 20px;
+  text-align: right;
+  color: #4285f4;
+  cursor: pointer;
+}
+
+.login-btn {
+  background-color: #00bfa5;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.signup-link {
+  margin-top: 20px;
+  font-size: 1rem;
+}
+
+.signup-link a {
+  color: #00bfa5;
+  cursor: pointer;
+}
