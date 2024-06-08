@@ -12,15 +12,30 @@ const images = [
 
 function Login() {
   const [index, setIndex] = React.useState(0);
+  const [username, setUsername] = React.useState("");
+  const [password, setPassword] = React.useState("");
 
   React.useEffect(() => {
     const interval = setInterval(() => {
       setIndex((prevIndex) =>
         prevIndex === images.length - 1 ? 0 : prevIndex + 1
       );
-    }, 4000);
+    }, 3750);
     return () => clearInterval(interval);
   }, []);
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    const loginData = {
+      username,
+      password,
+    };
+
+    if (!username || !password) {
+      window.alert("Please fill in both fields.");
+      return;
+    }
+  }
 
   return (
     <div className="login-container">
@@ -49,13 +64,17 @@ function Login() {
         </div>
         <div className="login-rightside">
           <h2>Welcome</h2>
-          <form>
+          <form onSubmit={handleSubmit}>
             <label htmlFor="username">Username</label>
             <input
               type="text"
               id="username"
               name="username"
               placeholder="Username"
+              value={username}
+              onChange={(event) => {
+                setUsername(event.target.value);
+              }}
             />
             <label htmlFor="password">Password</label>
             <input
@@ -63,6 +82,10 @@ function Login() {
               id="password"
               name="password"
               placeholder="Password"
+              value={password}
+              onChange={(event) => {
+                setPassword(event.target.value);
+              }}
             />
             <a href="#" className="forgot-password">
               Forgot password?
