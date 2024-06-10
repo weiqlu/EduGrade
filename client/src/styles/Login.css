@@ -10,7 +10,7 @@
   display: flex;
   width: 85%;
   height: 52vh;
-  max-width: 1400px;
+  max-width: 1350px;
   background-color: white;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
   border-radius: 25px;
@@ -18,7 +18,8 @@
 }
 
 .login-leftside {
-  flex: 1.7;
+  flex: 1.8;
+  min-width: 300px;
   position: relative;
   color: white;
   overflow: hidden;
@@ -43,6 +44,7 @@
 .login-rightside {
   flex: 0.9;
   padding: 40px;
+  min-width: 300px;
   display: flex;
   flex-direction: column;
   justify-content: center;

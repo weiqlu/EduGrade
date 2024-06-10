@@ -2,6 +2,7 @@ import React from "react";
 import "../styles/Login.css";
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+import swal from "sweetalert";
 
 const images = [
   "/classroomVT.jpg",
@@ -30,11 +31,11 @@ function Login() {
     event.preventDefault();
 
     if (!username || !password) {
-      window.alert("Please fill in both fields.");
+      swal("", "Please enter a username and password", "error");
       return;
     }
 
-    navigate("/ClassList");
+    navigate("/NavBar");
   }
 
   return (
