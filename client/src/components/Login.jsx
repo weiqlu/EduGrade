@@ -35,7 +35,7 @@ function Login() {
       return;
     }
 
-    navigate("/NavBar");
+    navigate("/ClassList");
   }
 
   return (
