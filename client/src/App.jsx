@@ -10,8 +10,7 @@ import "./App.css";
 
 function App() {
   const location = useLocation();
-
-  const list = ["/login", "/NotFound"]
+  const list = ["/login", "/NotFound"];
   const hideNavBar = list.includes(location.pathname);
 
   return (
@@ -23,8 +22,8 @@ function App() {
         <Route path="/ClassList" element={<ClassList />} />
         <Route path="/User" element={<User />} />
         <Route path="/Review" element={<Review />} />
-        <Route path="NotFound" element={<NotFound/>}/>
-        <Route path="*" element={<Navigate to="/NotFound"/>} />
+        <Route path="NotFound" element={<NotFound />} />
+        <Route path="*" element={<Navigate to="/NotFound" />} />
       </Routes>
     </div>
   );
