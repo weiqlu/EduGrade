@@ -19,11 +19,11 @@ function App() {
       <Routes>
         <Route path="/" element={<Navigate to="/login" />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/ClassList" element={<ClassList />} />
-        <Route path="/User" element={<User />} />
-        <Route path="/Review" element={<Review />} />
-        <Route path="NotFound" element={<NotFound />} />
-        <Route path="*" element={<Navigate to="/NotFound" />} />
+        <Route path="/classList" element={<ClassList />} />
+        <Route path="/user" element={<User />} />
+        <Route path="/review" element={<Review />} />
+        <Route path="notFound" element={<NotFound />} />
+        <Route path="*" element={<Navigate to="/notFound" />} />
       </Routes>
     </div>
   );

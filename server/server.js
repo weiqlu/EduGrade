@@ -12,6 +12,15 @@ app.use(
 );
 app.use(express.json());
 
+app.get("/", (req, res) => {
+  res.send("Welcome to the API");
+});
+
+app.get("/api/connection", (req, res) => {
+  console.log("getting message");
+  res.json({ message: "Connected" });
+});
+
 // const db = mysql.createConnection({
 //   user: "",
 //   host: "",
