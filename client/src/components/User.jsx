@@ -1,3 +1,5 @@
+import "../styles/User.css";
+
 function User() {
   return (
     <div>

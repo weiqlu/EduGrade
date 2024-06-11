@@ -1,4 +1,4 @@
-//import { motion } from "framer-motion";\
+import { motion } from "framer-motion";
 import { Routes, Route, useLocation, Navigate } from "react-router-dom";
 import Login from "./components/Login";
 import ClassList from "./components/ClassList";
@@ -10,20 +10,20 @@ import "./App.css";
 
 function App() {
   const location = useLocation();
-  const list = ["/login", "/NotFound"];
+  const list = ["/Login", "/NotFound"];
   const hideNavBar = list.includes(location.pathname);
 
   return (
     <div>
       {!hideNavBar && <NavBar />}
       <Routes>
-        <Route path="/" element={<Navigate to="/login" />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/" element={<Navigate to="/Login" />} />
+        <Route path="/Login" element={<Login />} />
         <Route path="/classList" element={<ClassList />} />
         <Route path="/user" element={<User />} />
         <Route path="/review" element={<Review />} />
-        <Route path="notFound" element={<NotFound />} />
-        <Route path="*" element={<Navigate to="/notFound" />} />
+        <Route path="NotFound" element={<NotFound />} />
+        <Route path="*" element={<Navigate to="/NotFound" />} />
       </Routes>
     </div>
   );
