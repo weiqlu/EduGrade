@@ -8,6 +8,7 @@ import Review from "./components/Review";
 import NotFound from "./components/NotFound";
 import Signup from "./components/Signup";
 import Home from "./components/Home";
+import PrivateRoute from "./components/PrivateRoute";
 import "./App.css";
 
 function App() {
@@ -21,13 +22,41 @@ function App() {
       <Routes>
         <Route path="/" element={<Navigate to="/Login" />} />
         <Route path="/Login" element={<Login />} />
-        <Route path="/Home" element={<Home />} />
-        <Route path="/classList" element={<ClassList />} />
         <Route path="/Signup" element={<Signup />} />
-        <Route path="/user" element={<User />} />
-        <Route path="/review" element={<Review />} />
-        <Route path="NotFound" element={<NotFound />} />
+        <Route path="/NotFound" element={<NotFound />} />
         <Route path="*" element={<Navigate to="/NotFound" />} />
+        <Route
+          path="/Home"
+          element={
+            <PrivateRoute>
+              <Home />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/classList"
+          element={
+            <PrivateRoute>
+              <ClassList />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/user"
+          element={
+            <PrivateRoute>
+              <User />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/review"
+          element={
+            <PrivateRoute>
+              <Review />
+            </PrivateRoute>
+          }
+        />
       </Routes>
     </div>
   );
