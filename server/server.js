@@ -103,6 +103,7 @@ app.get("/sections", (req, res) => {
   });
 });
 
+// to do: grabs all the reviews
 app.get("/reviews", (req, res) => {});
 
 app.post("/reviews", (req, res) => {
