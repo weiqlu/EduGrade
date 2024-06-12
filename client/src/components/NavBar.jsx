@@ -15,7 +15,7 @@ function NavBar() {
   return (
     <>
       <nav className="navbar-container">
-        <NavLink to={"/ClassList"} className="navbar-logo">
+        <NavLink to={"/Home"} className="navbar-logo">
           EduGrade
         </NavLink>
         <div className="navbar-links">

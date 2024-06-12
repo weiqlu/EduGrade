@@ -54,7 +54,7 @@ function Login() {
         // storing the token and status in localstorage, might change later
         localStorage.setItem("token", data.token);
         localStorage.setItem("status", data.status);
-        navigate("/ClassList");
+        navigate("/Home");
       } else {
         swal("", data.error, "error");
       }

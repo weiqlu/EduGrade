@@ -7,6 +7,7 @@ import NavBar from "./components/NavBar";
 import Review from "./components/Review";
 import NotFound from "./components/NotFound";
 import Signup from "./components/Signup";
+import Home from "./components/Home";
 import "./App.css";
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Navigate to="/Login" />} />
         <Route path="/Login" element={<Login />} />
+        <Route path="/Home" element={<Home />} />
         <Route path="/classList" element={<ClassList />} />
         <Route path="/Signup" element={<Signup />} />
         <Route path="/user" element={<User />} />
