@@ -49,7 +49,12 @@ function Login() {
       const data = await response.json();
 
       if (response.ok) {
-        swal("Success", "Login successful", "success");
+        swal({
+          title: "Success!",
+          text: "Login successful",
+          icon: "success",
+          timer: 1300,
+        });
 
         // storing the token and status in localstorage, might change later
         localStorage.setItem("token", data.token);
