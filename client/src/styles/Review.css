@@ -1,0 +1,135 @@
+.review-page {
+  margin: auto;
+  max-width: 1250px;
+  padding: 10px;
+  margin-top: 88px;
+  height: calc(100vh - 88px);
+  overflow-y: auto;
+}
+
+.review-search {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 10px;
+  background-color: #f9f9f9;
+  border: 2px solid rgba(204, 204, 204, 0.5);
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12);
+  margin-bottom: 12px;
+}
+
+.review-search form {
+  display: flex;
+  margin-right: 2px;
+  border-radius: 9px;
+}
+
+.review-search input {
+  margin-top: 5px;
+}
+
+.review-search button {
+  height: 44px;
+}
+
+.section-details-wrapper {
+  max-height: 70vh;
+  overflow-y: auto;
+  background-color: #e3f2fd;
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 12px;
+  border: 2px solid rgba(204, 204, 204, 0.5);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12);
+}
+
+.section-details h3 {
+  margin-top: 0;
+  color: #0d47a1;
+}
+
+.review-input {
+  background-color: #fff3e0;
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 12px;
+  border: 2px solid rgba(204, 204, 204, 0.5);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12);
+}
+
+.review-input button {
+  margin-right: 1px;
+}
+
+.review-input h3 {
+  margin-top: 0;
+  color: #e65100;
+}
+
+.review-textarea {
+  width: 100%;
+  box-sizing: border-box;
+  resize: vertical;
+}
+
+.reviews-list {
+  overflow-y: auto;
+  background-color: #e8f5e9;
+  border-radius: 10px;
+  padding: 15px;
+  border: 2px solid rgba(204, 204, 204, 0.5);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12);
+}
+
+.reviews-list h3 {
+  margin-top: 0;
+  color: #1b5e20;
+}
+
+.reviews-list table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.reviews-list th,
+.reviews-list td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.reviews-list th {
+  background-color: #c8e6c9;
+  color: #1b5e20;
+}
+
+.reviews-list td {
+  background-color: #f1f8e9;
+}
+
+.reviews-list tr:nth-child(even) {
+  background-color: #dcedc8;
+}
+
+.reviews-list .review-column {
+  width: 70%;
+  word-wrap: break-word;
+}
+
+.reviews-list .edit-column,
+.reviews-list .delete-column {
+  width: 10%;
+  text-align: center;
+}
+
+.p-button {
+  margin: 5px;
+}
+
+.review-submit-button {
+  text-align: right;
+  margin-top: 10px;
+}

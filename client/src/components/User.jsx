@@ -2,7 +2,7 @@ import "../styles/User.css";
 
 function User() {
   return (
-    <div>
+    <div className="user-container">
       <p> User </p>
     </div>
   );

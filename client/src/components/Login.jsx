@@ -5,10 +5,10 @@ import { useNavigate } from "react-router-dom";
 import swal from "sweetalert";
 
 const images = [
-  "/classroomVT.jpg",
-  "/drillfield.jpg",
   "/flowersVT.jpg",
   "/torgVT.jpg",
+  "/drillfield.jpg",
+  "/classroomVT.jpg",
   "/buildingVT.jpg",
 ];
 

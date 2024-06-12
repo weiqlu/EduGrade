@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+//import { motion } from "framer-motion";
 import { Routes, Route, useLocation, Navigate } from "react-router-dom";
 import Login from "./components/Login";
 import ClassList from "./components/ClassList";
