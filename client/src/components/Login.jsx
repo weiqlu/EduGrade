@@ -25,7 +25,7 @@ function Login() {
       setIndex((prevIndex) =>
         prevIndex === images.length - 1 ? 0 : prevIndex + 1
       );
-    }, 3750);
+    }, 3700);
     return () => clearInterval(interval);
   }, []);
 

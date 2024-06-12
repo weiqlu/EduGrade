@@ -51,7 +51,7 @@ app.post("/signup", async (req, res) => {
     );
   } catch (error) {
     console.error("Error hashing password:\n", error);
-    res.status(500).json({ error: "Internal server error" });
+    res.status(500).json({ error: "server error" });
   }
 });
 
@@ -161,6 +161,7 @@ app.put("/reviews/:id", (req, res) => {
   });
 });
 
+const port = 5000;
 app.listen(5000, () => {
-  console.log("Listening on port 5000");
+  console.log(`Listening on port ${port}`);
 });
