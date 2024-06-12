@@ -1,6 +1,9 @@
 const express = require("express");
 const mysql = require("mysql2");
 const cors = require("cors");
+const jwt = require("jsonwebtoken");
+const argon2 = require("argon2");
+const bodyParser = require("body-parser");
 
 const app = express();
 app.use(
@@ -26,6 +29,68 @@ db.connect((err) => {
   console.log("Connected to Database!");
 });
 
+app.post("/signup", async (req, res) => {
+  const { username, password } = req.body;
+
+  try {
+    const hashedPassword = await argon2.hash(password);
+    const status = "user";
+
+    db.query(
+      "INSERT INTO users (username, password, status) VALUES (?, ?, ?)",
+      [username, hashedPassword, status],
+      (err, results) => {
+        if (err) {
+          if (err.code === "ER_DUP_ENTRY") {
+            return res.status(400).json({ error: "Username already exists" });
+          }
+          return res.status(500).json({ error: "Database error" });
+        }
+        res.status(201).json({ message: "User registered successfully" });
+      }
+    );
+  } catch (error) {
+    console.error("Error hashing password:\n", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+app.post("/login", async (req, res) => {
+  const { username, password } = req.body;
+
+  db.query(
+    "SELECT * FROM users WHERE username = ?",
+    [username],
+    async (err, results) => {
+      if (err) {
+        return res.status(500).json({ error: "Database error" });
+      }
+
+      if (results.length === 0) {
+        return res.status(401).json({ error: "Invalid username or password" });
+      }
+
+      const user = results[0];
+      // verifies the inputted password against the hashed password stored in the database
+      const passwordMatch = await argon2.verify(user.password, password);
+
+      if (!passwordMatch) {
+        return res.status(401).json({ error: "Invalid username or password" });
+      }
+
+      const token = jwt.sign(
+        { username: user.username, status: user.status },
+        "user-key",
+        {
+          expiresIn: "1h",
+        }
+      );
+
+      res.json({ token, status: user.status });
+    }
+  );
+});
+
 app.get("/sections", (req, res) => {
   const sql = "SELECT * FROM sections";
   db.query(sql, (err, result) => {
@@ -38,9 +103,7 @@ app.get("/sections", (req, res) => {
   });
 });
 
-app.get("/reviews", (req, res) => {
-  
-})
+app.get("/reviews", (req, res) => {});
 
 app.post("/reviews", (req, res) => {
   const { crn, review } = req.body;

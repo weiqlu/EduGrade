@@ -4,7 +4,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate, Link } from "react-router-dom";
 import swal from "sweetalert";
 
-// images to cycle for the transition on the login page
 const images = [
   "/flowersVT.jpg",
   "/torgVT.jpg",
@@ -13,13 +12,13 @@ const images = [
   "/buildingVT.jpg",
 ];
 
-function Login() {
+function Signup() {
   const [index, setIndex] = React.useState(0);
   const [username, setUsername] = React.useState("");
   const [password, setPassword] = React.useState("");
+  const [confirmPassword, setConfirmPassword] = React.useState("");
   const navigate = useNavigate();
 
-  // handles the image transitions without user input
   React.useEffect(() => {
     const interval = setInterval(() => {
       setIndex((prevIndex) =>
@@ -32,13 +31,18 @@ function Login() {
   async function handleSubmit(event) {
     event.preventDefault();
 
-    if (!username || !password) {
-      swal("", "Please enter a username and password", "error");
+    if (!username || !password || !confirmPassword) {
+      swal("", "Please fill in all fields", "error");
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      swal("", "Passwords do not match", "error");
       return;
     }
 
     try {
-      const response = await fetch("http://localhost:5000/login", {
+      const response = await fetch("http://localhost:5000/signup", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -49,12 +53,8 @@ function Login() {
       const data = await response.json();
 
       if (response.ok) {
-        swal("Success", "Login successful", "success");
-
-        // storing the token and status in localstorage, might change later
-        localStorage.setItem("token", data.token);
-        localStorage.setItem("status", data.status);
-        navigate("/ClassList");
+        swal("Success", "Sign-up successful", "success");
+        navigate("/Login");
       } else {
         swal("", data.error, "error");
       }
@@ -113,13 +113,24 @@ function Login() {
                 setPassword(event.target.value);
               }}
             />
+            <label htmlFor="confirmPassword">Confirm Password</label>
+            <input
+              type="password"
+              id="confirmPassword"
+              name="confirmPassword"
+              placeholder="Confirm Password"
+              value={confirmPassword}
+              onChange={(event) => {
+                setConfirmPassword(event.target.value);
+              }}
+            />
             <br />
-            <button type="submit" className="login-btn" onClick={handleSubmit}>
-              Login
+            <button type="submit" className="login-btn">
+              Sign Up
             </button>
           </form>
-          <p className="signup-link">
-            Create new Account? <Link to={"/Signup"}>Sign Up</Link>
+          <p className="signin-link">
+            Already have an account? <Link to={"/Login"}>Login</Link>
           </p>
         </div>
       </div>
@@ -127,4 +138,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default Signup;

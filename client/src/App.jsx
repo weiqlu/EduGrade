@@ -6,11 +6,12 @@ import User from "./components/User";
 import NavBar from "./components/NavBar";
 import Review from "./components/Review";
 import NotFound from "./components/NotFound";
+import Signup from "./components/Signup";
 import "./App.css";
 
 function App() {
   const location = useLocation();
-  const list = ["/Login", "/NotFound"];
+  const list = ["/Login", "/NotFound", "/Signup"];
   const hideNavBar = list.includes(location.pathname);
 
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="/" element={<Navigate to="/Login" />} />
         <Route path="/Login" element={<Login />} />
         <Route path="/classList" element={<ClassList />} />
+        <Route path="/Signup" element={<Signup />} />
         <Route path="/user" element={<User />} />
         <Route path="/review" element={<Review />} />
         <Route path="NotFound" element={<NotFound />} />

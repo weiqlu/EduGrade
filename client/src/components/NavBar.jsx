@@ -1,7 +1,17 @@
 import "../styles/NavBar.css";
 import { Outlet, NavLink } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
 
 function NavBar() {
+  const token = localStorage.getItem("token");
+  let status = null;
+
+  // decodes token and stores it in status to compare if the user is an admin
+  if (token) {
+    const decoded = jwtDecode(token);
+    status = decoded.status;
+  }
+
   return (
     <>
       <nav className="navbar-container">
@@ -9,12 +19,14 @@ function NavBar() {
           EduGrade
         </NavLink>
         <div className="navbar-links">
-          <NavLink
-            to={"/User"}
-            className={({ isActive }) => (isActive ? "active-link" : "")}
-          >
-            Users
-          </NavLink>
+          {status === "admin" && (
+            <NavLink
+              to={"/User"}
+              className={({ isActive }) => (isActive ? "active-link" : "")}
+            >
+              Users
+            </NavLink>
+          )}
           <NavLink
             to={"/ClassList"}
             className={({ isActive }) => (isActive ? "active-link" : "")}

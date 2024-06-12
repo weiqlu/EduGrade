@@ -104,3 +104,13 @@ form input {
   color: #00bfa5;
   cursor: pointer;
 }
+
+.signup-link a,
+.signin-link a {
+  color: #4caf50; 
+}
+
+.signup-link a:hover,
+.signin-link a:hover {
+  color: #45a049; 
+}
