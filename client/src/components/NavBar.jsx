@@ -1,9 +1,10 @@
 import "../styles/NavBar.css";
-import { Outlet, NavLink } from "react-router-dom";
+import { Outlet, NavLink, useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 
 function NavBar() {
   const token = localStorage.getItem("token");
+  const navigate = useNavigate();
   let status = null;
 
   // decodes token and stores it in status to compare if the user is an admin
@@ -11,6 +12,13 @@ function NavBar() {
     const decoded = jwtDecode(token);
     status = decoded.status;
   }
+
+  // removes token after logging out
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("status");
+    navigate("/Login");
+  };
 
   return (
     <>
@@ -42,6 +50,7 @@ function NavBar() {
           <NavLink
             to={"/Login"}
             className={({ isActive }) => (isActive ? "active-link" : "")}
+            onClick={handleLogout}
           >
             Logout
           </NavLink>

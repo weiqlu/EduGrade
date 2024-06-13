@@ -53,7 +53,7 @@ function Login() {
           title: "Success!",
           text: "Login successful",
           icon: "success",
-          timer: 1300,
+          timer: 1000,
         });
 
         // storing the token and status in localstorage, might change later
@@ -124,7 +124,7 @@ function Login() {
             </button>
           </form>
           <p className="signup-link">
-            Create new Account? <Link to={"/Signup"}>Sign Up</Link>
+            Create new account? <Link to={"/Signup"}>Sign Up</Link>
           </p>
         </div>
       </div>
