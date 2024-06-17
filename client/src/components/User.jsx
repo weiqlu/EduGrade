@@ -45,18 +45,28 @@ function User() {
   }, []);
   */
 
-  // const handleAdmin = () => {}
+  const handleAdmin = () => {
+    console.log("Button Clicked!\nSelected users will become admins.");
+    // Update permissions for users
 
-  // const handleDelete = () => {}
+    setSelected([]); // Unselect all users
+  }
+
+  const handleDelete = () => {
+    console.log("Button Clicked!\nSelected users will be deleted.");
+    // Remove users from database
+
+    setSelected([]); // Unselect all users
+  }
 
   return (
     // Data Table contains all of the created users
     <div className="user-container">
       {/* <p> User </p> */}
-      <h2>List of Users</h2>
-      <p>Explain functionality here</p>
-      <Button label="Make Admin" severity="help" raised rounded/>
-      <Button label="Delete" severity="danger" raised rounded/>
+      <h2>Userlist</h2>
+      <p>Here's a list of the website's managable users. Administrators can delete users or turn users into more admins.</p>
+      <Button label="Make Admin" onClick={handleAdmin} severity="help" raised rounded/>
+      <Button label="Delete" onClick={handleDelete} severity="danger" raised rounded/>
       <DataTable
         value={users}
         selection={selectedUsers}
