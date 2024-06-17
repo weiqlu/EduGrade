@@ -1,5 +1,4 @@
 import "../styles/User.css";
-
 import React from "react";
 import { Button } from "primereact/button";
 import { DataTable } from "primereact/datatable";
