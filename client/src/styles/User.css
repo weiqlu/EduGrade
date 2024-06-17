@@ -1,4 +1,31 @@
 .user-container {
   /* margin-top: auto; */
   padding-top: 75px;
+  /* width: 200px; */
+
+  display: flex;
+  flex-direction: column;
+  justify-content:  center;
+  align-items: center;
+  text-align: center;
+}
+
+.button-container {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.p-datatable {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12);
+}
+
+.p-datatable .p-datatable-thead > tr > th,
+.p-datatable .p-datatable-tbody > tr > td {
+  white-space: normal;
+  word-wrap: break-word;
+  max-width: 175px;
+  padding: 5px;
+  border: 2px solid rgba(204, 204, 204, 0.5);
+  border-bottom: 1px solid #e0e0e0; /* Light gray line between rows */
+  background-color: #f9f9f9e8;
 }

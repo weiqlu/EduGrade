@@ -62,11 +62,12 @@ function User() {
   return (
     // Data Table contains all of the created users
     <div className="user-container">
-      {/* <p> User </p> */}
       <h2>Userlist</h2>
       <p>Here's a list of the website's managable users. Administrators can delete users or turn users into more admins.</p>
-      <Button label="Make Admin" onClick={handleAdmin} severity="help" raised rounded/>
-      <Button label="Delete" onClick={handleDelete} severity="danger" raised rounded/>
+      <div className="button-container">
+        <Button label="Make Admin" onClick={handleAdmin} severity="help" raised rounded/>
+        <Button label="Delete" onClick={handleDelete} severity="danger" raised rounded/>
+      </div>
       <DataTable
         value={users}
         selection={selectedUsers}
