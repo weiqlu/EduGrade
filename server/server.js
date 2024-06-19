@@ -148,7 +148,7 @@ app.post("/reviews", (req, res) => {
   });
 });
 
-// delete reivew
+// delete review
 app.delete("/reviews/:username/:crn", (req, res) => {
   const { username, crn } = req.params;
   const query = "DELETE FROM reviews WHERE username = ? AND crn = ?";
@@ -175,6 +175,51 @@ app.put("/reviews/:username/:crn", (req, res) => {
     }
     res.json({ message: "Review updated successfully" });
   });
+});
+
+// fetch all users
+app.get("/users", (req, res) => {
+  const query = "SELECT username, status FROM users";
+  db.query(query, (err, result) => {
+    if (err) {
+      console.error("Error fetching user data from database:", err);
+      res.status(500).json({ error: "Database query failed" });
+      return;
+    }
+    res.json(result);
+  });
+});
+
+// delete user
+app.delete("/users/:username", (req, res) => {
+  const { username } = req.params;
+  const query = "DELETE FROM users WHERE username = ?";
+  db.query(query, [username], (err, results) => {
+    if (err) {
+      console.error("Error deleting user from database:\n", err);
+      res.status(500).send("Error deleting user");
+      return;
+    }
+    res.json({ message: "User deleted successfully" });
+  });
+});
+
+// modify user status (admin or user)
+app.put("/users/:username", (req, res) => {
+  const { username } = req.params;
+  const { status } = req.body;
+  db.query(
+    "UPDATE users SET status = ? WHERE username = ?",
+    [status, username],
+    (error, results) => {
+      if (error) {
+        console.error("Error updating user status in database:\n", error);
+        res.status(500).send("Error updating user status");
+        return;
+      }
+      res.json({ message: "User status updated successfully" });
+    }
+  );
 });
 
 const port = 5000;

@@ -1,42 +1,22 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable react/no-unescaped-entities */
 import "../styles/User.css";
 import React from "react";
 import { Button } from "primereact/button";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
+import axios from "axios";
 
 function User() {
-  // Dummy data to test Data Table
-  const dummyData = [
-    {
-      id: 1,
-      username: "dummy #1",
-    },
-    {
-      id: 2,
-      username: "dummy #2",
-    },
-    {
-      id: 3,
-      username: "dummy #3",
-    },
-  ];
-
-  const [users, setUsers] = React.useState(dummyData);
-  // const [users, setUsers] = React.useState([]);
+  const [users, setUsers] = React.useState([]);
   const [selectedUsers, setSelected] = React.useState(null);
   const [isLoading, setIsLoading] = React.useState(false);
 
-  /**
-   * Will retrieve all of the users from the database
-   * 
   React.useEffect(() => {
     setIsLoading(true);
     axios
       .get("http://localhost:5000/users")
       .then((response) => {
-        // ...
+        setUsers(response.data);
         setIsLoading(false);
       })
       .catch((error) => {
@@ -44,30 +24,49 @@ function User() {
         setIsLoading(false);
       });
   }, []);
-  */
 
   const handleAdmin = () => {
-    console.log("Button Clicked!\nSelected users will become admins.");
-    // Update permissions for users
+    selectedUsers.forEach((user) => {
+      axios
+        .put(`http://localhost:5000/users/${user.username}`, {
+          status: "admin",
+        })
+        .then(() => {
+          setUsers((prevUsers) =>
+            prevUsers.map((u) =>
+              u.username === user.username ? { ...u, status: "admin" } : u
+            )
+          );
+        })
+        .catch((error) => {
+          console.error("Error updating user status: ", error);
+        });
+    });
 
-    setSelected([]); // Unselect all users
+    setSelected([]);
   };
 
   const handleDelete = () => {
-    console.log("Button Clicked!\nSelected users will be deleted.");
-    // Remove users from database
+    selectedUsers.forEach((user) => {
+      axios
+        .delete(`http://localhost:5000/users/${user.username}`)
+        .then(() => {
+          setUsers((prevUsers) =>
+            prevUsers.filter((u) => u.username !== user.username)
+          );
+        })
+        .catch((error) => {
+          console.error("Error deleting user: ", error);
+        });
+    });
 
-    setSelected([]); // Unselect all users
+    setSelected([]);
   };
 
   return (
-    // Data Table contains all of the created users
     <div className="user-container">
-      <h2>Userlist</h2>
-      <p>
-        Here's a list of the website's managable users. Administrators can
-        delete users or turn users into more admins.
-      </p>
+      <h2>User List</h2>
+      <p>Here's a list of the website's manageable users</p>
       <div className="button-container">
         <Button
           label="Make Admin"
@@ -88,13 +87,15 @@ function User() {
         value={users}
         selection={selectedUsers}
         onSelectionChange={(e) => setSelected(e.value)}
-        dataKey="id"
+        dataKey="username"
+        loading={isLoading}
       >
         <Column
           selectionMode="multiple"
           headerStyle={{ width: "3rem" }}
         ></Column>
-        <Column field="username" header="Usernames"></Column>
+        <Column field="username" header="Username"></Column>
+        <Column field="status" header="Status"></Column>
       </DataTable>
     </div>
   );
