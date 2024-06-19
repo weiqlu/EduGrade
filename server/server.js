@@ -3,7 +3,6 @@ const mysql = require("mysql2");
 const cors = require("cors");
 const jwt = require("jsonwebtoken");
 const argon2 = require("argon2");
-const bodyParser = require("body-parser");
 
 const app = express();
 app.use(
@@ -71,7 +70,6 @@ app.post("/login", async (req, res) => {
       }
 
       const user = results[0];
-      // verifies the inputted password against the hashed password stored in the database
       const passwordMatch = await argon2.verify(user.password, password);
 
       if (!passwordMatch) {
@@ -86,14 +84,15 @@ app.post("/login", async (req, res) => {
         }
       );
 
-      res.json({ token, status: user.status });
+      res.json({ token, status: user.status, username: user.username });
     }
   );
 });
 
+// fetch all sections
 app.get("/sections", (req, res) => {
-  const sql = "SELECT * FROM sections";
-  db.query(sql, (err, result) => {
+  const query = "SELECT * FROM sections";
+  db.query(query, (err, result) => {
     if (err) {
       console.error("Error fetching data from database:", err);
       res.status(500).json({ error: "Database query failed" });
@@ -103,61 +102,78 @@ app.get("/sections", (req, res) => {
   });
 });
 
-// to do: grabs all the reviews
-app.get("/reviews", (req, res) => {});
+// fetch sections to CRN
+app.get("/sections/:crn", (req, res) => {
+  const { crn } = req.params;
+  const sql = "SELECT * FROM sections WHERE crn = ?";
+  db.query(sql, [crn], (err, result) => {
+    if (err) {
+      console.error("Error fetching data from database:", err);
+      res.status(500).json({ error: "Database query failed" });
+      return;
+    }
+    if (result.length === 0) {
+      res.status(404).json({ error: "No section found with the given CRN" });
+      return;
+    }
+    res.json(result[0]);
+  });
+});
 
+// fetch reviews to CRN
+app.get("/reviews/:crn", (req, res) => {
+  const { crn } = req.params;
+  const query = "SELECT * FROM reviews WHERE crn = ?";
+  db.query(query, [crn], (err, result) => {
+    if (err) {
+      console.error("Error fetching reviews from database:", err);
+      res.status(500).json({ error: "Database query failed" });
+      return;
+    }
+    res.json(result);
+  });
+});
+
+// add review
 app.post("/reviews", (req, res) => {
-  const { crn, review } = req.body;
-  const query = "INSERT INTO reviews (crn, review) VALUES (?, ?)";
-  db.query(query, [crn, review], (err, results) => {
+  const { crn, review, username } = req.body;
+  const query = "INSERT INTO reviews (crn, review, username) VALUES (?, ?, ?)";
+  db.query(query, [crn, review, username], (err, results) => {
     if (err) {
       console.error("Error inserting review into database:\n", err);
       res.status(500).send("Error inserting review");
       return;
     }
-    const insertedId = results.insertId;
-    const newReview = { id: insertedId, crn, review };
-    res.status(201).json(newReview);
+    res.status(201).json({ message: "Review submitted successfully" });
   });
 });
 
-app.get("/reviews/:crn", (req, res) => {
-  const { crn } = req.params;
-  const query = "SELECT * FROM reviews WHERE crn = ?";
-  db.query(query, [crn], (err, results) => {
-    if (err) {
-      console.error("Error fetching reviews from database:\n", err);
-      res.status(500).send("Error fetching reviews");
-      return;
-    }
-    res.json(results);
-  });
-});
-
-app.delete("/reviews/:id", (req, res) => {
-  const { id } = req.params;
-  const query = "DELETE FROM reviews WHERE id = ?";
-  db.query(query, [id], (err, results) => {
+// delete reivew
+app.delete("/reviews/:username/:crn", (req, res) => {
+  const { username, crn } = req.params;
+  const query = "DELETE FROM reviews WHERE username = ? AND crn = ?";
+  db.query(query, [username, crn], (err, results) => {
     if (err) {
       console.error("Error deleting review from database:\n", err);
       res.status(500).send("Error deleting review");
       return;
     }
-    res.send("Review deleted successfully");
+    res.json({ message: "Review deleted successfully" });
   });
 });
 
-app.put("/reviews/:id", (req, res) => {
-  const { id } = req.params;
+// modify review
+app.put("/reviews/:username/:crn", (req, res) => {
+  const { username, crn } = req.params;
   const { review } = req.body;
-  const query = "UPDATE reviews SET review = ? WHERE id = ?";
-  db.query(query, [review, id], (err, results) => {
+  const query = "UPDATE reviews SET review = ? WHERE username = ? AND crn = ?";
+  db.query(query, [review, username, crn], (err, results) => {
     if (err) {
       console.error("Error updating review in database:\n", err);
       res.status(500).send("Error updating review");
       return;
     }
-    res.send("Review updated successfully");
+    res.json({ message: "Review updated successfully" });
   });
 });
 
