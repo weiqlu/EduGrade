@@ -48,6 +48,12 @@ function NavBar() {
             Review
           </NavLink>
           <NavLink
+            to={"/Account"}
+            className={({ isActive }) => (isActive ? "active-link" : "")}
+          >
+            Account
+          </NavLink>
+          <NavLink
             to={"/Login"}
             className={({ isActive }) => (isActive ? "active-link" : "")}
             onClick={handleLogout}
