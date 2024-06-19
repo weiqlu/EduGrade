@@ -1,5 +1,9 @@
 import React from "react";
+import axios from "axios";
+import { jwtDecode } from "jwt-decode";
+import swal from "sweetalert";
 import "../styles/Review.css";
+import "primeicons/primeicons.css";
 import { InputText } from "primereact/inputtext";
 import { FloatLabel } from "primereact/floatlabel";
 import { Button } from "primereact/button";
@@ -10,181 +14,173 @@ function Review() {
   const [section, setSection] = React.useState(null);
   const [review, setReview] = React.useState("");
   const [reviews, setReviews] = React.useState([]);
+  const [status, setStatus] = React.useState(localStorage.getItem("status"));
 
   React.useEffect(() => {
-    if (crn) {
-      fetch(`http://localhost:5000/reviews/${crn}`)
-        .then((response) => response.json())
-        .then((data) => {
-          setReviews(data);
-        })
-        .catch((error) => {
-          console.error("Error fetching reviews:", error);
-        });
+    if (!status) {
+      const token = localStorage.getItem("token");
+      if (token) {
+        const decoded = jwtDecode(token);
+        setStatus(decoded.status);
+      }
     }
-  }, [crn]);
+  }, [status]);
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    fetch("http://localhost:5000/sections")
-      .then((response) => response.json())
-      .then((data) => {
-        const foundSection = data.find((sec) => sec.crn === parseInt(crn));
-        setSection(foundSection || null);
-        setCrn("");
-      })
-      .catch((error) => {
-        console.error("Error fetching section:", error);
-      });
-  };
-
-  const handleReviewSubmit = (event) => {
-    event.preventDefault();
-    if (section) {
-      const newReview = { crn: section.crn, review };
-      fetch("http://localhost:5000/reviews", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(newReview),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          setReviews([...reviews, data]);
-          setReview("");
-        })
-        .catch((error) => {
-          console.error("Error submitting review:", error);
-        });
+  const handleSearch = async () => {
+    try {
+      const sectionResponse = await axios.get(
+        `http://localhost:5000/sections/${crn}`
+      );
+      const reviewsResponse = await axios.get(
+        `http://localhost:5000/reviews/${crn}`
+      );
+      setSection(sectionResponse.data);
+      setReviews(reviewsResponse.data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      swal("", "Error fetching data", "error");
     }
   };
 
-  const handleReviewDelete = (id) => {
-    fetch(`http://localhost:5000/reviews/${id}`, {
-      method: "DELETE",
-    })
-      .then(() => {
-        const newReviews = reviews.filter((review) => review.id !== id);
-        setReviews(newReviews);
-      })
-      .catch((error) => {
-        console.error("Error deleting review:", error);
+  const handleSubmitReview = async () => {
+    const username = localStorage.getItem("username");
+    try {
+      await axios.post("http://localhost:5000/reviews", {
+        crn,
+        review,
+        username,
       });
+      swal("Success", "Review submitted", "success");
+      setReview("");
+      handleSearch();
+    } catch (error) {
+      console.error("Error submitting review:", error);
+      swal("", "Please enter a review", "error");
+    }
   };
 
-  const handleReviewEdit = (id, index) => {
-    const newReview = prompt("Edit your review:", reviews[index].review);
-    if (newReview !== null) {
-      fetch(`http://localhost:5000/reviews/${id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ review: newReview }),
-      })
-        .then(() => {
-          const updatedReview = { ...reviews[index], review: newReview };
-          const newReviews = reviews.map((rev, i) =>
-            i === index ? updatedReview : rev
-          );
-          setReviews(newReviews);
-        })
-        .catch((error) => {
-          console.error("Error updating review:", error);
+  const handleDeleteReview = async (username, crn) => {
+    try {
+      await axios.delete(`http://localhost:5000/reviews/${username}/${crn}`);
+      swal("Success", "Review deleted", "success");
+      handleSearch();
+    } catch (error) {
+      console.error("Error deleting review:", error);
+      swal("", "Error deleting review", "error");
+    }
+  };
+
+  const handleEditReview = async (username, crn) => {
+    const newReview = prompt("Enter your new review:");
+
+    if (newReview) {
+      try {
+        await axios.put(`http://localhost:5000/reviews/${username}/${crn}`, {
+          review: newReview,
         });
+        alert("Review updated successfully");
+        handleSearch();
+      } catch (error) {
+        console.error("Error updating review:", error);
+        alert("Error updating review");
+      }
     }
   };
 
   return (
-    <div className="review-page">
+    <div className="review-wrapper">
       <div className="review-container">
-        <div className="review-search">
-          <h2>Section Review </h2>
-          <form onSubmit={handleSubmit}>
+        <div className="review-header">
+          <h2 className="review-title">Review Page</h2>
+          <div className="review-search">
             <FloatLabel>
               <InputText
-                id="crn"
+                id="crn-input"
                 value={crn}
-                onChange={(event) => {
-                  setCrn(event.target.value);
-                }}
-                aria-label="Section CRN"
+                onChange={(e) => setCrn(e.target.value)}
+                className="review-input"
               />
-              <label htmlFor="crn">Section CRN</label>
+              <label htmlFor="crn-input">Section CRN</label>
             </FloatLabel>
-            <Button label="Search" />
-          </form>
+            <Button
+              icon="pi pi-search"
+              severity="help"
+              aria-label="Search"
+              onClick={handleSearch}
+              className="review-search-button"
+            />
+          </div>
         </div>
+
         {section && (
-          <>
-            <div className="section-details-wrapper">
-              <div className="section-details">
-                <h3>Section Details</h3>
-                <p>Year: {section.year}</p>
-                <p>Term: {section.term}</p>
-                <p>CRN: {section.crn}</p>
-                <p>
-                  Course: {section.subject} {section.number}
-                </p>
-                <p>Title: {section.title}</p>
-                <p>Instructor: {section.instructor}</p>
-                <p>GPA: {section.gpa}</p>
-                <p>Enrollments: {section.enrollments}</p>
-                <p>Credits: {section.credits}</p>
-              </div>
+          <div className="review-section-info">
+            <h3>Section Information</h3>
+            <p>
+              <strong>Subject:</strong> {section.subject}
+            </p>
+            <p>
+              <strong>Number:</strong> {section.number}
+            </p>
+            <p>
+              <strong>Instructor:</strong> {section.instructor}
+            </p>
+            <p>
+              <strong>Term:</strong> {section.term}
+            </p>
+            <p>
+              <strong>Year:</strong> {section.year}
+            </p>
+          </div>
+        )}
+
+        {section && (
+          <div className="review-submit-box">
+            <div className="review-submit">
+              <h3>Submit a Review</h3>
+              <InputTextarea
+                autoResize
+                value={review}
+                onChange={(event) => setReview(event.target.value)}
+                rows={5}
+                cols={30}
+                className="review-textarea"
+              />
+              <button onClick={handleSubmitReview} className="review-button">
+                Submit
+              </button>
             </div>
-            <div className="review-input">
-              <form onSubmit={handleReviewSubmit}>
-                <h3>Submit a Review</h3>
-                <InputTextarea
-                  value={review}
-                  onChange={(e) => setReview(e.target.value)}
-                  rows={5}
-                  cols={30}
-                  placeholder="Write your review here."
-                  aria-label="Write your review here."
-                  className="review-textarea"
-                />
-                <div className="review-submit-button">
-                  <Button label="Submit" />
-                </div>
-              </form>
-            </div>
-            <div className="reviews-list">
+          </div>
+        )}
+
+        {reviews.length > 0 && (
+          <div className="review-list-box">
+            <div className="review-list">
               <h3>Reviews</h3>
-              <table>
-                <thead>
-                  <tr>
-                    <th className="review-column">Review</th>
-                    <th className="edit-column">Edit</th>
-                    <th className="delete-column">Delete</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {reviews.map((rev, index) => (
-                    <tr key={rev.id}>
-                      <td className="review-column">{rev.review}</td>
-                      <td className="edit-column">
-                        <Button
-                          label="Edit"
-                          onClick={() => handleReviewEdit(rev.id, index)}
-                          className="p-button-secondary p-button-sm"
-                        />
-                      </td>
-                      <td className="delete-column">
-                        <Button
-                          label="Delete"
-                          onClick={() => handleReviewDelete(rev.id)}
-                          className="p-button-danger p-button-sm"
-                        />
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+              {reviews.map((rev) => (
+                <div key={`${rev.username}-${rev.crn}`} className="review-item">
+                  <p>
+                    <strong>{rev.username}</strong>: {rev.review}
+                  </p>
+                  {status === "admin" && (
+                    <div className="review-actions">
+                      <button
+                        onClick={() => handleEditReview(rev.username, rev.crn)}
+                        className="review-button"
+                      >
+                        Edit
+                      </button>
+                      <button
+                        onClick={() => handleDeleteReview(rev.username, rev.crn)}
+                        className="review-button"
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  )}
+                </div>
+              ))}
             </div>
-          </>
+          </div>
         )}
       </div>
     </div>

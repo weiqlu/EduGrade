@@ -59,6 +59,7 @@ function Login() {
         // storing the token and status in localstorage, might change later
         localStorage.setItem("token", data.token);
         localStorage.setItem("status", data.status);
+        localStorage.setItem("username", data.username)
         navigate("/Home");
       } else {
         swal("", data.error, "error");

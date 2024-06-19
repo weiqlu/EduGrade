@@ -11,7 +11,7 @@
 }
 
 .distribution-container,
-.review-container {
+.second-container {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -21,11 +21,11 @@
 }
 
 .distribution-container p,
-.review-container p {
+.second-container p {
   flex: 1;
 }
 
 .distribution-container img,
-.review-container img {
+.second-container img {
   flex-shrink: 0;
 }

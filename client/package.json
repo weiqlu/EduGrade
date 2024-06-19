@@ -1,5 +1,6 @@
 {
   "name": "client",
+  "homepage": "/",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -13,6 +14,7 @@
     "axios": "^1.7.2",
     "framer-motion": "^11.2.10",
     "jwt-decode": "^4.0.0",
+    "primeicons": "^7.0.0",
     "primereact": "^10.6.6",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",

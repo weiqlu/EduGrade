@@ -1,135 +1,124 @@
-.review-page {
-  margin: auto;
+.review-wrapper {
+  height: 100vh;
+}
+
+.review-container {
+  margin-top: auto;
+  margin-left: auto;
+  margin-right: auto;
   max-width: 1250px;
   padding: 10px;
-  margin-top: 88px;
-  height: calc(100vh - 88px);
-  overflow-y: auto;
+  padding-top: 98px;
+}
+
+.review-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  border: 2px solid rgba(204, 204, 204, 0.5);
+  border-radius: 8px;
+  padding: 10px;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12);
+}
+
+.review-title {
+  margin-left: 2px;
 }
 
 .review-search {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  width: 100%;
-  padding: 10px;
-  background-color: #f9f9f9;
-  border: 2px solid rgba(204, 204, 204, 0.5);
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12);
-  margin-bottom: 12px;
-}
-
-.review-search form {
-  display: flex;
-  margin-right: 2px;
-  border-radius: 9px;
 }
 
 .review-search input {
-  margin-top: 5px;
+  flex: 1;
+  margin-right: 5px;
+  border-radius: 9px;
+  width: 260px;
 }
 
-.review-search button {
+.review-search-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 50px;
   height: 44px;
+  margin-bottom: 1px;
 }
 
-.section-details-wrapper {
-  max-height: 70vh;
-  overflow-y: auto;
-  background-color: #e3f2fd;
-  border-radius: 10px;
+.review-button:hover {
+  background-color: purple;
+}
+
+.review-section-info {
+  margin-bottom: 20px;
   padding: 15px;
-  margin-bottom: 12px;
-  border: 2px solid rgba(204, 204, 204, 0.5);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12);
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
 }
 
-.section-details h3 {
-  margin-top: 0;
-  color: #0d47a1;
-}
-
-.review-input {
-  background-color: #fff3e0;
-  border-radius: 10px;
+.review-submit-box {
+  margin-bottom: 20px;
   padding: 15px;
-  margin-bottom: 12px;
-  border: 2px solid rgba(204, 204, 204, 0.5);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12);
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
 }
 
-.review-input button {
-  margin-right: 1px;
+.review-list-box {
+  margin-top: 20px;
+  padding: 15px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
 }
 
-.review-input h3 {
-  margin-top: 0;
-  color: #e65100;
+.review-submit {
+  margin-bottom: 20px;
 }
 
 .review-textarea {
   width: 100%;
-  box-sizing: border-box;
+  height: 100px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+
+.review-list {
+  margin-top: 20px;
+}
+
+.review-item {
+  margin-bottom: 10px;
+  padding: 10px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.review-actions {
+  margin-top: 5px;
+}
+
+.review-actions .review-button {
+  margin-right: 5px;
+}
+
+textarea {
   resize: vertical;
 }
 
-.reviews-list {
-  overflow-y: auto;
-  background-color: #e8f5e9;
-  border-radius: 10px;
-  padding: 15px;
-  border: 2px solid rgba(204, 204, 204, 0.5);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12);
-}
-
-.reviews-list h3 {
-  margin-top: 0;
-  color: #1b5e20;
-}
-
-.reviews-list table {
-  width: 100%;
-  border-collapse: collapse;
-  table-layout: fixed;
-}
-
-.reviews-list th,
-.reviews-list td {
-  padding: 10px;
-  text-align: left;
-  border-bottom: 1px solid #ddd;
-}
-
-.reviews-list th {
-  background-color: #c8e6c9;
-  color: #1b5e20;
-}
-
-.reviews-list td {
-  background-color: #f1f8e9;
-}
-
-.reviews-list tr:nth-child(even) {
-  background-color: #dcedc8;
-}
-
-.reviews-list .review-column {
-  width: 70%;
-  word-wrap: break-word;
-}
-
-.reviews-list .edit-column,
-.reviews-list .delete-column {
-  width: 10%;
-  text-align: center;
-}
-
-.p-button {
-  margin: 5px;
-}
-
-.review-submit-button {
-  text-align: right;
-  margin-top: 10px;
+.review-button {
+  padding: 10px 20px;
+  background-color: #b048e0;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
 }
