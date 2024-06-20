@@ -8,7 +8,7 @@ import Review from "./components/Review";
 import NotFound from "./components/NotFound";
 import Signup from "./components/Signup";
 import Home from "./components/Home";
-import Account from "./components/Account"
+import Account from "./components/Account";
 import PrivateRoute from "./components/PrivateRoute";
 import "./App.css";
 
@@ -21,7 +21,7 @@ function App() {
     <div>
       {!hideNavBar && <NavBar />}
       <Routes>
-        <Route path="/" element={<Navigate to="/Login" />} />
+        <Route path="/" element={<Navigate to="/Account" />} />
         <Route path="/Login" element={<Login />} />
         <Route path="/Signup" element={<Signup />} />
         <Route path="/NotFound" element={<NotFound />} />
@@ -61,9 +61,9 @@ function App() {
         <Route
           path="/Account"
           element={
-            <PrivateRoute>
+            // <PrivateRoute>
               <Account />
-            </PrivateRoute>
+            // {/* </PrivateRoute> */}
           }
         />
       </Routes>

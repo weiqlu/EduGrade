@@ -1,3 +1,14 @@
 .account-container {
     padding-top: 80px;
 }
+
+.old-container {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.new-container {
+    display: flex;
+    flex-direction: column;
+}

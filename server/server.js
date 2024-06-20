@@ -222,6 +222,44 @@ app.put("/users/:username", (req, res) => {
   );
 });
 
+// Determine if given password matches user's in database
+app.get("/match", async (req, res) => {
+  const { username, password } = req.query;
+  const query = "SELECT password FROM users WHERE username = ?";
+  db.query(query, [username], async (err, result) => {
+    if (err) {
+      console.error("Error fetching password from database: ", err);
+      res.status(500).json({ error: "Database query failed" });
+      return;
+    }
+
+    const compare = result[0].password;
+    try {
+      const match = await argon2.verify(compare, password);
+      res.json(match);
+    } catch (error) {
+      console.error("Error verifying password: ", error);
+      res.status(500).json({ error: "Password verification failed" });
+    }
+  });
+});
+
+// Update user with a new password
+app.put("/password:username", async (req, res) => {
+  const { username } = req.params;
+  const { newPassword } = req.body;
+  const hashed = await argon2.hash(newPassword);
+  const query = "UPDATE users SET password = ? WHERE username = ?";
+  db.query(query, [hashed, username], (err, results) => {
+    if (err) {
+      console.error("Error updating password in database: ", err);
+      res.status(500).json({ error: "Database query failed" });
+      return;
+    }
+    res.json({ message: "Password updated successfully"});
+  });
+});
+
 const port = 5000;
 app.listen(5000, () => {
   console.log(`Listening on port ${port}`);
