@@ -21,7 +21,7 @@ function App() {
     <div>
       {!hideNavBar && <NavBar />}
       <Routes>
-        <Route path="/" element={<Navigate to="/Account" />} />
+        <Route path="/" element={<Navigate to="/Login" />} />
         <Route path="/Login" element={<Login />} />
         <Route path="/Signup" element={<Signup />} />
         <Route path="/NotFound" element={<NotFound />} />
@@ -61,9 +61,9 @@ function App() {
         <Route
           path="/Account"
           element={
-            // <PrivateRoute>
+            <PrivateRoute>
               <Account />
-            // {/* </PrivateRoute> */}
+            </PrivateRoute>
           }
         />
       </Routes>
