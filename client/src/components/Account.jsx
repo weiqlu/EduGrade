@@ -1,5 +1,6 @@
 import "../styles/Account.css";
 import React from "react";
+import swal from "sweetalert";
 import { Button } from "primereact/button";
 import { Dialog } from "primereact/dialog";
 import { InputText } from "primereact/inputtext";
@@ -8,44 +9,56 @@ function Account() {
     const [password, setOld] = React.useState("");
     const [newPassword, setNew] = React.useState("");
     const [visible, setVisible] = React.useState(false);
+    const [response, setResponse] = React.useState("");
 
     const handlePassword = async () => {
-        // Verify Match
-        try {
-            const response = await axios.get(`http://localhost:5000/match`, {
-                params: {
-                    username: localStorage.getItem("username"),
-                    password: password
-                }
-            }).then(async response => {
-                const match = response.data;
-                console.log("Password match: ", match);
-                
-                // Update with new password
-                if (match) {
-                    try {
-                        await axios.put(`http://localhost:5000/password/${localStorage.getItem("username")}`, {
-                            password: newPassword,
-                        });
-                    } catch (error) {
-                        console.error("Error updating password: ", error);
+        // Check Textfields
+        if (password === "") {
+            setResponse("Please enter your original password.");
+        }
+        else if (newPassword === "") {
+            setResponse("Please enter your desired, new password.");
+        }
+        else {
+            // Verify Old Password
+            try {
+                await axios.get(`http://localhost:5000/match`, {
+                    params: {
+                        username: localStorage.getItem("username"),
+                        password: password
                     }
-        
-                    setOld("");
-                    setNew("");
-                    setVisible(false);
-                }
-            })
-        } catch (error) {
-            console.error("Error fetching user's password: ", error);
+                }).then(async response => {
+                    const match = response.data;
+                    console.log("Password match: ", match);
+                    
+                    // Update with new password
+                    if (match) {
+                        try {
+                            await axios.put(`http://localhost:5000/password/${localStorage.getItem("username")}`, {
+                                password: newPassword,
+                            });
+                            swal("Success", "Password Updated", "success");
+                            setOld("");
+                            setNew("");
+                            setVisible(false);
+                            setResponse("");
+                        } catch (error) {
+                            console.error("Error updating password: ", error);
+                            setResponse("Error updating password. Please try again later.");
+                        }
+                    }
+                })
+            } catch (error) {
+                console.error("Error verifying password: ", error);
+                setResponse("Error verifying old password. Please try again later.");
+            }
         }
     }
         
     return (
         <div className="account-container">
             <h2>Account Information</h2>
-            <p>Username: retrieved from local storage</p>
-            {/* <p>Username: {localStorage.getItem("username")}</p> */}
+            <p>Username: {localStorage.getItem("username")}</p>
             <Button
                 label="Change Password"
                 onClick={() => setVisible(true)}
@@ -55,7 +68,7 @@ function Account() {
             <Dialog
                 header="Change Your Password"
                 visible={visible}
-                style={{ width: "50vw" }}
+                style={{ width: "500px" }}
                 onHide={() => {if (!visible) return; setVisible(false); }}
                 footer={
                     <Button label="Confirm" onClick={handlePassword} raised rounded />
@@ -71,7 +84,7 @@ function Account() {
                         <InputText value={newPassword} onChange={(e) => setNew(e.target.value)} />
                         <small>Enter your new password.</small>
                     </div>
-                    {/* Include warning if password is incorrect */}
+                    <small style={{color: "red"}}>{response}</small>
             </Dialog>
         </div>
     )
