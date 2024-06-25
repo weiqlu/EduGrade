@@ -2,7 +2,6 @@
   /* margin-top: auto; */
   padding-top: 80px;
   /* width: 200px; */
-
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -13,6 +12,9 @@
 .button-container {
   margin-top: 20px;
   margin-bottom: 20px;
+  display: flex;
+  gap: 6px; 
+  justify-content: center;
 }
 
 .p-datatable {
@@ -24,7 +26,7 @@
   white-space: normal;
   word-wrap: break-word;
   max-width: 175px;
-  padding: 5px;
+  padding: 11px;
   border: 2px solid rgba(204, 204, 204, 0.5);
   border-bottom: 1px solid #e0e0e0; /* Light gray line between rows */
   background-color: #f9f9f9e8;

@@ -73,14 +73,12 @@ function User() {
           onClick={handleAdmin}
           severity="help"
           raised
-          rounded
         />
         <Button
           label="Delete"
           onClick={handleDelete}
           severity="danger"
           raised
-          rounded
         />
       </div>
       <DataTable
