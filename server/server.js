@@ -233,6 +233,11 @@ app.get("/match", async (req, res) => {
       return;
     }
 
+    if (result.length === 0) {
+      res.status(404).json({ error: "User not found" });
+      return;
+    }
+
     const compare = result[0].password;
     try {
       const match = await argon2.verify(compare, password);
@@ -245,19 +250,24 @@ app.get("/match", async (req, res) => {
 });
 
 // Update user with a new password
-app.put("/password:username", async (req, res) => {
+app.put("/password/:username", async (req, res) => {
   const { username } = req.params;
   const { newPassword } = req.body;
-  const hashed = await argon2.hash(newPassword);
-  const query = "UPDATE users SET password = ? WHERE username = ?";
-  db.query(query, [hashed, username], (err, results) => {
-    if (err) {
-      console.error("Error updating password in database: ", err);
-      res.status(500).json({ error: "Database query failed" });
-      return;
-    }
-    res.json({ message: "Password updated successfully"});
-  });
+  try {
+    const hashed = await argon2.hash(newPassword);
+    const query = "UPDATE users SET password = ? WHERE username = ?";
+    db.query(query, [hashed, username], (err, results) => {
+      if (err) {
+        console.error("Error updating password in database: ", err);
+        res.status(500).json({ error: "Database query failed" });
+        return;
+      }
+      res.json({ message: "Password updated successfully" });
+    });
+  } catch (error) {
+    console.error("Error hashing password: ", error);
+    res.status(500).json({ error: "Password hashing failed" });
+  }
 });
 
 const port = 5000;
