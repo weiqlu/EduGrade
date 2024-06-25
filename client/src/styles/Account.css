@@ -1,13 +1,62 @@
 .account-container {
-    padding-top: 80px;
+  padding-top: 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: Arial, sans-serif;
 }
 
-.old-container, .new-container {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 20px;
+.account-container h2 {
+  color: #333;
+  margin-bottom: 20px;
 }
 
-/* .dialog {
-    width: 250px;
-} */
+.account-container p {
+  margin-bottom: 20px;
+  font-size: 1.1em;
+  color: #666;
+}
+
+.old-container,
+.new-container {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.old-container label,
+.new-container label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.old-container small,
+.new-container small {
+  margin-top: 5px;
+  color: #888;
+}
+
+.p-dialog-header {
+  font-size: 1.25em;
+  color: #333;
+}
+
+.p-dialog .p-dialog-content {
+  padding: 2em;
+}
+
+.p-dialog .p-dialog-footer {
+  padding-top: 1em;
+}
+
+.small-error {
+  color: red;
+  font-size: 0.875em;
+  margin-top: 10px;
+  display: block;
+}
+
+.p-inputtext {
+  padding: 0.75em;
+  font-size: 1em;
+}

@@ -92,7 +92,7 @@ function Account() {
           />
           <small>Enter your new password.</small>
         </div>
-        <small style={{ color: "red" }}>{response}</small>
+        <small className="small-error">{response}</small>
       </Dialog>
     </div>
   );
