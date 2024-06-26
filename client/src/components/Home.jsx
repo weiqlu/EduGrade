@@ -1,8 +1,11 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/no-unescaped-entities */
 import "../styles/Home.css";
+import React from "react";
 import { Image } from "primereact/image";
 import { Button } from "primereact/button";
 import { Link } from "react-router-dom";
+import Statistics from "./Statistics";
 
 function Home() {
   return (
@@ -57,6 +60,7 @@ function Home() {
           />
         </Link>
       </div>
+      <Statistics />
     </div>
   );
 }

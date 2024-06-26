@@ -270,6 +270,28 @@ app.put("/password/:username", async (req, res) => {
   }
 });
 
+// gets specific data using
+app.get("/statistics", (req, res) => {
+  const statsQuery = `
+  SELECT 
+    (SELECT AVG(gpa) FROM sections WHERE subject = 'CS' AND number = 3114) AS avgGPA,
+    (SELECT MIN(gpa) FROM sections WHERE subject = 'CS' AND number = 3114) AS minGPA,
+    (SELECT MAX(gpa) FROM sections WHERE subject = 'CS' AND number = 3114) AS maxGPA,
+    (SELECT SUM(enrollments) FROM sections WHERE subject = 'CS' AND number = 3114) AS totalEnrollments,
+    (SELECT COUNT(*) FROM sections WHERE year = '2020-21' AND term = 'Spring') AS sectionCount,
+    (SELECT COUNT(*) FROM sections) AS totalSections;
+  `;
+
+  db.query(statsQuery, (err, results) => {
+    if (err) {
+      console.error("Error fetching statistics from database:", err);
+      res.status(500).json({ error: "Database query failed" });
+      return;
+    }
+    res.json(results[0]);
+  });
+});
+
 const port = 5000;
 app.listen(5000, () => {
   console.log(`Listening on port ${port}`);
