@@ -60,7 +60,6 @@ function Home() {
           />
         </Link>
       </div>
-      <Statistics />
     </div>
   );
 }
