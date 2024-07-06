@@ -3,6 +3,7 @@ const mysql = require("mysql2");
 const cors = require("cors");
 const jwt = require("jsonwebtoken");
 const argon2 = require("argon2");
+const path = require("path");
 
 const app = express();
 app.use(
