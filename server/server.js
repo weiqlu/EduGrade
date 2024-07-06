@@ -9,17 +9,17 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 const app = express();
+app.use(express.json());
+
 app.use(
   cors({
     origin: ["https://edugrade.onrender.com"],
     credentials: true,
   })
 );
-app.use(express.json());
 
 const db = mysql.createConnection({
   host: process.env.DB_HOST,
-  port: process.env.DB_PORT,
   user: process.env.DB_USER,
   password: process.env.DB_PASS,
   database: process.env.DB_NAME,
@@ -34,7 +34,9 @@ db.connect((err) => {
 });
 
 app.post("/signup", async (req, res) => {
+  console.log("Signup route hit");
   const { username, password } = req.body;
+  console.log("Received data:", username, password);
 
   try {
     const hashedPassword = await argon2.hash(password);
@@ -48,6 +50,7 @@ app.post("/signup", async (req, res) => {
           if (err.code === "ER_DUP_ENTRY") {
             return res.status(400).json({ error: "Username already exists" });
           }
+          console.error("Database error during signup:\n", err);
           return res.status(500).json({ error: "Database error" });
         }
         res.status(201).json({ message: "User registered successfully" });

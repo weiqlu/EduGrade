@@ -30,6 +30,10 @@ function Signup() {
 
   async function handleSubmit(event) {
     event.preventDefault();
+    console.log("Form submitted");
+    console.log("Username:", username);
+    console.log("Password:", password);
+    console.log("Confirm Password:", confirmPassword);
 
     if (!username || !password || !confirmPassword) {
       swal("", "Please fill in all fields", "error");
@@ -51,14 +55,17 @@ function Signup() {
       });
 
       const data = await response.json();
+      console.log("Response data:", data);
 
       if (response.ok) {
         swal("Success", "Sign-up successful", "success");
         navigate("/Login");
       } else {
+        console.error("Signup error:", data.error);
         swal("", data.error, "error");
       }
     } catch (error) {
+      console.error("Network error during signup:", error);
       swal("", "An error occurred. Please try again later.", "error");
     }
   }
