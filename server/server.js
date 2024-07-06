@@ -292,6 +292,12 @@ app.get("/statistics", (req, res) => {
   });
 });
 
+app.use(express.static(path.join(__dirname, "client/build")));
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "client/build", "index.html"));
+});
+
 const port = 5000;
 app.listen(5000, () => {
   console.log(`Listening on port ${port}`);
