@@ -21,7 +21,7 @@ function Account() {
     } else {
       try {
         // Verify Old Password
-        const verifyResponse = await axios.get(`http://localhost:5000/match`, {
+        const verifyResponse = await axios.get(`https://edugrade.onrender.com/match`, {
           params: {
             username: localStorage.getItem("username"),
             password: password,
@@ -33,7 +33,7 @@ function Account() {
         // Update with new password
         if (match) {
           await axios.put(
-            `http://localhost:5000/password/${localStorage.getItem(
+            `https://edugrade.onrender.com/password/${localStorage.getItem(
               "username"
             )}`,
             {

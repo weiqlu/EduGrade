@@ -29,10 +29,10 @@ function Review() {
   const handleSearch = async () => {
     try {
       const sectionResponse = await axios.get(
-        `http://localhost:5000/sections/${crn}`
+        `https://edugrade.onrender.com/sections/${crn}`
       );
       const reviewsResponse = await axios.get(
-        `http://localhost:5000/reviews/${crn}`
+        `https://edugrade.onrender.com/reviews/${crn}`
       );
       setSection(sectionResponse.data);
       setReviews(reviewsResponse.data);
@@ -45,7 +45,7 @@ function Review() {
   const handleSubmitReview = async () => {
     const username = localStorage.getItem("username");
     try {
-      await axios.post("http://localhost:5000/reviews", {
+      await axios.post("https://edugrade.onrender.com/reviews", {
         crn,
         review,
         username,
@@ -61,7 +61,7 @@ function Review() {
 
   const handleDeleteReview = async (username, crn) => {
     try {
-      await axios.delete(`http://localhost:5000/reviews/${username}/${crn}`);
+      await axios.delete(`https://edugrade.onrender.com/reviews/${username}/${crn}`);
       swal("Success", "Review deleted", "success");
       handleSearch();
     } catch (error) {
@@ -75,7 +75,7 @@ function Review() {
 
     if (newReview) {
       try {
-        await axios.put(`http://localhost:5000/reviews/${username}/${crn}`, {
+        await axios.put(`https://edugrade.onrender.com/reviews/${username}/${crn}`, {
           review: newReview,
         });
         alert("Review updated successfully");

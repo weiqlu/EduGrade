@@ -19,7 +19,7 @@ function ClassList() {
   React.useEffect(() => {
     setIsLoading(true);
     axios
-      .get("http://localhost:5000/sections")
+      .get("https://edugrade.onrender.com/sections")
       .then((response) => {
         const formattedData = response.data.map((item) => ({
           ...item,

@@ -8,7 +8,7 @@ const path = require("path");
 const app = express();
 app.use(
   cors({
-    origin: ["http://localhost:3000"],
+    origin: ["https://edugrade.onrender.com"],
     credentials: true,
   })
 );

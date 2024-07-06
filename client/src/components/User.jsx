@@ -14,7 +14,7 @@ function User() {
   React.useEffect(() => {
     setIsLoading(true);
     axios
-      .get("http://localhost:5000/users")
+      .get("https://edugrade.onrender.com/users")
       .then((response) => {
         setUsers(response.data);
         setIsLoading(false);
@@ -28,7 +28,7 @@ function User() {
   const handleAdmin = () => {
     selectedUsers.forEach((user) => {
       axios
-        .put(`http://localhost:5000/users/${user.username}`, {
+        .put(`https://edugrade.onrender.com/users/${user.username}`, {
           status: "admin",
         })
         .then(() => {
@@ -49,7 +49,7 @@ function User() {
   const handleDelete = () => {
     selectedUsers.forEach((user) => {
       axios
-        .delete(`http://localhost:5000/users/${user.username}`)
+        .delete(`https://edugrade.onrender.com/users/${user.username}`)
         .then(() => {
           setUsers((prevUsers) =>
             prevUsers.filter((u) => u.username !== user.username)
