@@ -15,10 +15,11 @@ app.use(
 app.use(express.json());
 
 const db = mysql.createConnection({
-  host: "localhost",
-  user: "weiqlu",
-  password: "1200Fairwater",
-  database: "edugrade",
+  host: "edugrade-db.czscu6k0ctq2.us-east-1.rds.amazonaws.com",
+  port: "3306",
+  user: "admin",
+  password: "1200fairwater",
+  database: "edugradedb",
 });
 
 db.connect((err) => {
