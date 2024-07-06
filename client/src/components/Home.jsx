@@ -5,7 +5,6 @@ import React from "react";
 import { Image } from "primereact/image";
 import { Button } from "primereact/button";
 import { Link } from "react-router-dom";
-import Statistics from "./Statistics";
 
 function Home() {
   return (
