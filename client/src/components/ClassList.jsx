@@ -19,7 +19,7 @@ function ClassList() {
   React.useEffect(() => {
     setIsLoading(true);
     axios
-      .get("https://edugrade-server.vercel.app/sections")
+      .get("http://localhost:5000/sections")
       .then((response) => {
         const formattedData = response.data.map((item) => ({
           ...item,

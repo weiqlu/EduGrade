@@ -14,7 +14,7 @@ function User() {
   React.useEffect(() => {
     setIsLoading(true);
     axios
-      .get("https://edugrade-server.vercel.app/users")
+      .get("http://localhost:5000/users")
       .then((response) => {
         setUsers(response.data);
         setIsLoading(false);
@@ -28,7 +28,7 @@ function User() {
   const handleAdmin = () => {
     selectedUsers.forEach((user) => {
       axios
-        .put(`https://edugrade-server.vercel.app/users/${user.username}`, {
+        .put(`http://localhost:5000/users/${user.username}`, {
           status: "admin",
         })
         .then(() => {
@@ -49,7 +49,7 @@ function User() {
   const handleDelete = () => {
     selectedUsers.forEach((user) => {
       axios
-        .delete(`https://edugrade-server.vercel.app/users/${user.username}`)
+        .delete(`http://localhost:5000/users/${user.username}`)
         .then(() => {
           setUsers((prevUsers) =>
             prevUsers.filter((u) => u.username !== user.username)

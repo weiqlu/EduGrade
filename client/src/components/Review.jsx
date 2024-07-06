@@ -29,10 +29,10 @@ function Review() {
   const handleSearch = async () => {
     try {
       const sectionResponse = await axios.get(
-        `https://edugrade-server.vercel.app/sections/${crn}`
+        `http://localhost:5000/sections/${crn}`
       );
       const reviewsResponse = await axios.get(
-        `https://edugrade-server.vercel.app/reviews/${crn}`
+        `http://localhost:5000/reviews/${crn}`
       );
       setSection(sectionResponse.data);
       setReviews(reviewsResponse.data);
@@ -45,7 +45,7 @@ function Review() {
   const handleSubmitReview = async () => {
     const username = localStorage.getItem("username");
     try {
-      await axios.post("https://edugrade-server.vercel.app/reviews", {
+      await axios.post("http://localhost:5000/reviews", {
         crn,
         review,
         username,
@@ -61,7 +61,7 @@ function Review() {
 
   const handleDeleteReview = async (username, crn) => {
     try {
-      await axios.delete(`https://edugrade-server.vercel.app/reviews/${username}/${crn}`);
+      await axios.delete(`http://localhost:5000/reviews/${username}/${crn}`);
       swal("Success", "Review deleted", "success");
       handleSearch();
     } catch (error) {
@@ -75,7 +75,7 @@ function Review() {
 
     if (newReview) {
       try {
-        await axios.put(`https://edugrade-server.vercel.app/reviews/${username}/${crn}`, {
+        await axios.put(`http://localhost:5000/reviews/${username}/${crn}`, {
           review: newReview,
         });
         alert("Review updated successfully");
