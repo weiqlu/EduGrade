@@ -21,19 +21,22 @@ function Account() {
     } else {
       try {
         // Verify Old Password
-        const verifyResponse = await axios.get(`http://localhost:5000/match`, {
-          params: {
-            username: localStorage.getItem("username"),
-            password: password,
-          },
-        });
+        const verifyResponse = await axios.get(
+          `https://edugrade-server.vercel.app/match`,
+          {
+            params: {
+              username: localStorage.getItem("username"),
+              password: password,
+            },
+          }
+        );
         const match = verifyResponse.data;
         console.log("Password match: ", match);
 
         // Update with new password
         if (match) {
           await axios.put(
-            `http://localhost:5000/password/${localStorage.getItem(
+            `https://edugrade-server.vercel.app/password/${localStorage.getItem(
               "username"
             )}`,
             {

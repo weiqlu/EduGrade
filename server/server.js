@@ -7,7 +7,7 @@ const argon2 = require("argon2");
 const app = express();
 app.use(
   cors({
-    origin: ["http://localhost:3000"],
+    origin: ["https://edugrade-lac.vercel.app"],
     credentials: true,
   })
 );
