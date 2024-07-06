@@ -54,15 +54,22 @@ function Signup() {
         body: JSON.stringify({ username, password }),
       });
 
-      const data = await response.json();
-      console.log("Response data:", data);
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error("Signup error:", errorData.error);
+        swal("", errorData.error, "error");
+        return;
+      }
 
-      if (response.ok) {
+      const data = await response.json().catch(() => {
+        console.error("Response is not JSON");
+        swal("", "An error occurred. Please try again later.", "error");
+      });
+
+      if (data) {
+        console.log("Response data:", data);
         swal("Success", "Sign-up successful", "success");
         navigate("/Login");
-      } else {
-        console.error("Signup error:", data.error);
-        swal("", data.error, "error");
       }
     } catch (error) {
       console.error("Network error during signup:", error);

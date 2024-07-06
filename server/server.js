@@ -48,17 +48,19 @@ app.post("/signup", async (req, res) => {
       (err, results) => {
         if (err) {
           if (err.code === "ER_DUP_ENTRY") {
+            console.error("Username already exists");
             return res.status(400).json({ error: "Username already exists" });
           }
           console.error("Database error during signup:\n", err);
           return res.status(500).json({ error: "Database error" });
         }
+        console.log("User registered successfully");
         res.status(201).json({ message: "User registered successfully" });
       }
     );
   } catch (error) {
     console.error("Error hashing password:\n", error);
-    res.status(500).json({ error: "server error" });
+    res.status(500).json({ error: "Server error" });
   }
 });
 
